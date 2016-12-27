@@ -1,0 +1,21 @@
+web:
+    image: nginx:latest
+    ports:
+     - "8080:80"
+    volumes:
+     - ./src:/src
+     - ./env/etc/nginx/conf.d/:/etc/nginx/conf.d/
+    links:
+        - php
+        
+php:
+    image: php:7-fpm
+    volumes:
+     - ./src:/src
+     
+composer:
+    restart: 'yes'
+    image: "composer/composer"
+    command: install
+    volumes:
+     - ./src:/app
